@@ -38,27 +38,27 @@ func main() {
 		fmt.Printf("Something went wrong: %s\n", err.Error())
 		os.Exit(1)
 	}
-	for _, line := range lines {
+	for _, line := range *lines {
 		fmt.Println(line)
 	}
 }
 
 // slidingWindow does the heavy lifting. Returning a slice makes this testble
-func slidingWindow(file, startTag, endTag string, include bool) ([]string, error) {
+func slidingWindow(file, startTag, endTag string, include bool) (*[]string, error) {
 	wantedLines := []string{}
 	loadedFile, err := os.Open(file)
 	if err != nil {
-		return wantedLines, err
+		return &wantedLines, err
 	}
 	defer loadedFile.Close()
 
 	start, err := regexp.Compile(startTag)
 	if err != nil {
-		return wantedLines, err
+		return &wantedLines, err
 	}
 	end, err := regexp.Compile(endTag)
 	if err != nil {
-		return wantedLines, err
+		return &wantedLines, err
 	}
 
 	printing := true
@@ -82,5 +82,5 @@ func slidingWindow(file, startTag, endTag string, include bool) ([]string, error
 
 		}
 	}
-	return wantedLines, nil
+	return &wantedLines, nil
 }

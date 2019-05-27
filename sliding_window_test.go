@@ -28,24 +28,27 @@ func TestSlidingWindowResults(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error in slidingWindow: %s", err.Error())
 	}
-	if len(lines) != without {
-		t.Errorf("Expected %d lines, but got %d lines", without, len(lines))
+	result := len(*lines)
+	if result != without {
+		t.Errorf("Expected %d lines, but got %d lines", without, result)
 	}
 
 	lines, err = slidingWindow(testFile, start, end, include)
 	if err != nil {
 		t.Errorf("Unexpected error in slidingWindow: %s", err.Error())
 	}
-	if len(lines) != with {
-		t.Errorf("Expected %d lines, but got %d lines", without, len(lines))
+	result = len(*lines)
+	if result != with {
+		t.Errorf("Expected %d lines, but got %d lines", without, result)
 	}
 
 	lines, err = slidingWindow(testFile, start, end, include)
 	if err != nil {
 		t.Errorf("Unexpected error in slidingWindow: %s", err.Error())
 	}
-	if len(lines) == unexpected {
-		t.Errorf("Expected %d lines, but got %d lines", without, len(lines))
+	result = len(*lines)
+	if result == unexpected {
+		t.Errorf("Expected %d lines, but got %d lines", without, result)
 	}
 }
 
